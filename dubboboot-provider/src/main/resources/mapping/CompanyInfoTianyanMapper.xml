@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsj.dubbo.test.mapper.CompanyInfoTianyanMapper">
+  <resultMap id="BaseResultMap" type="com.jsj.dubbo.test.model.CompanyInfoTianyan">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="lianxi_dianhua" jdbcType="VARCHAR" property="lianxiDianhua" />
+    <result column="e_mail" jdbcType="VARCHAR" property="eMail" />
+    <result column="web_address" jdbcType="VARCHAR" property="webAddress" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="faren_name" jdbcType="VARCHAR" property="farenName" />
+    <result column="zhuce_ziben" jdbcType="VARCHAR" property="zhuceZiben" />
+    <result column="zhuce_shijian" jdbcType="VARCHAR" property="zhuceShijian" />
+    <result column="jingying_zhuangtai" jdbcType="VARCHAR" property="jingyingZhuangtai" />
+    <result column="hangye" jdbcType="VARCHAR" property="hangye" />
+    <result column="qiyeleixing" jdbcType="VARCHAR" property="qiyeleixing" />
+    <result column="gongshang_zhucehao" jdbcType="VARCHAR" property="gongshangZhucehao" />
+    <result column="zuzhijigou_daima" jdbcType="VARCHAR" property="zuzhijigouDaima" />
+    <result column="tongyixinyong_daima" jdbcType="VARCHAR" property="tongyixinyongDaima" />
+    <result column="nashuiren_shibiehao" jdbcType="VARCHAR" property="nashuirenShibiehao" />
+    <result column="jingying_qixian" jdbcType="VARCHAR" property="jingyingQixian" />
+    <result column="hezhun_riqi" jdbcType="VARCHAR" property="hezhunRiqi" />
+    <result column="dengji_jiguan" jdbcType="VARCHAR" property="dengjiJiguan" />
+    <result column="zhuce_dizhi" jdbcType="VARCHAR" property="zhuceDizhi" />
+    <result column="jingying_fanwei" jdbcType="VARCHAR" property="jingyingFanwei" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, city_name, company_id, company_name, lianxi_dianhua, e_mail, web_address, address, 
+    faren_name, zhuce_ziben, zhuce_shijian, jingying_zhuangtai, hangye, qiyeleixing, 
+    gongshang_zhucehao, zuzhijigou_daima, tongyixinyong_daima, nashuiren_shibiehao, jingying_qixian, 
+    hezhun_riqi, dengji_jiguan, zhuce_dizhi, jingying_fanwei, createtime
+  </sql>
+  <select id="selectByExample" parameterType="com.jsj.dubbo.test.model.CompanyInfoTianyanExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company_info_tianyan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.jsj.dubbo.test.model.CompanyInfoTianyanExample">
+    delete from company_info_tianyan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jsj.dubbo.test.model.CompanyInfoTianyan">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into company_info_tianyan (city_name, company_id, company_name, 
+      lianxi_dianhua, e_mail, web_address, 
+      address, faren_name, zhuce_ziben, 
+      zhuce_shijian, jingying_zhuangtai, hangye, 
+      qiyeleixing, gongshang_zhucehao, zuzhijigou_daima, 
+      tongyixinyong_daima, nashuiren_shibiehao, 
+      jingying_qixian, hezhun_riqi, dengji_jiguan, 
+      zhuce_dizhi, jingying_fanwei, createtime
+      )
+    values (#{cityName,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{lianxiDianhua,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR}, #{webAddress,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{farenName,jdbcType=VARCHAR}, #{zhuceZiben,jdbcType=VARCHAR}, 
+      #{zhuceShijian,jdbcType=VARCHAR}, #{jingyingZhuangtai,jdbcType=VARCHAR}, #{hangye,jdbcType=VARCHAR}, 
+      #{qiyeleixing,jdbcType=VARCHAR}, #{gongshangZhucehao,jdbcType=VARCHAR}, #{zuzhijigouDaima,jdbcType=VARCHAR}, 
+      #{tongyixinyongDaima,jdbcType=VARCHAR}, #{nashuirenShibiehao,jdbcType=VARCHAR}, 
+      #{jingyingQixian,jdbcType=VARCHAR}, #{hezhunRiqi,jdbcType=VARCHAR}, #{dengjiJiguan,jdbcType=VARCHAR}, 
+      #{zhuceDizhi,jdbcType=VARCHAR}, #{jingyingFanwei,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsj.dubbo.test.model.CompanyInfoTianyan">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into company_info_tianyan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="companyName != null">
+        company_name,
+      </if>
+      <if test="lianxiDianhua != null">
+        lianxi_dianhua,
+      </if>
+      <if test="eMail != null">
+        e_mail,
+      </if>
+      <if test="webAddress != null">
+        web_address,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="farenName != null">
+        faren_name,
+      </if>
+      <if test="zhuceZiben != null">
+        zhuce_ziben,
+      </if>
+      <if test="zhuceShijian != null">
+        zhuce_shijian,
+      </if>
+      <if test="jingyingZhuangtai != null">
+        jingying_zhuangtai,
+      </if>
+      <if test="hangye != null">
+        hangye,
+      </if>
+      <if test="qiyeleixing != null">
+        qiyeleixing,
+      </if>
+      <if test="gongshangZhucehao != null">
+        gongshang_zhucehao,
+      </if>
+      <if test="zuzhijigouDaima != null">
+        zuzhijigou_daima,
+      </if>
+      <if test="tongyixinyongDaima != null">
+        tongyixinyong_daima,
+      </if>
+      <if test="nashuirenShibiehao != null">
+        nashuiren_shibiehao,
+      </if>
+      <if test="jingyingQixian != null">
+        jingying_qixian,
+      </if>
+      <if test="hezhunRiqi != null">
+        hezhun_riqi,
+      </if>
+      <if test="dengjiJiguan != null">
+        dengji_jiguan,
+      </if>
+      <if test="zhuceDizhi != null">
+        zhuce_dizhi,
+      </if>
+      <if test="jingyingFanwei != null">
+        jingying_fanwei,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="lianxiDianhua != null">
+        #{lianxiDianhua,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="webAddress != null">
+        #{webAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="farenName != null">
+        #{farenName,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuceZiben != null">
+        #{zhuceZiben,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuceShijian != null">
+        #{zhuceShijian,jdbcType=VARCHAR},
+      </if>
+      <if test="jingyingZhuangtai != null">
+        #{jingyingZhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="hangye != null">
+        #{hangye,jdbcType=VARCHAR},
+      </if>
+      <if test="qiyeleixing != null">
+        #{qiyeleixing,jdbcType=VARCHAR},
+      </if>
+      <if test="gongshangZhucehao != null">
+        #{gongshangZhucehao,jdbcType=VARCHAR},
+      </if>
+      <if test="zuzhijigouDaima != null">
+        #{zuzhijigouDaima,jdbcType=VARCHAR},
+      </if>
+      <if test="tongyixinyongDaima != null">
+        #{tongyixinyongDaima,jdbcType=VARCHAR},
+      </if>
+      <if test="nashuirenShibiehao != null">
+        #{nashuirenShibiehao,jdbcType=VARCHAR},
+      </if>
+      <if test="jingyingQixian != null">
+        #{jingyingQixian,jdbcType=VARCHAR},
+      </if>
+      <if test="hezhunRiqi != null">
+        #{hezhunRiqi,jdbcType=VARCHAR},
+      </if>
+      <if test="dengjiJiguan != null">
+        #{dengjiJiguan,jdbcType=VARCHAR},
+      </if>
+      <if test="zhuceDizhi != null">
+        #{zhuceDizhi,jdbcType=VARCHAR},
+      </if>
+      <if test="jingyingFanwei != null">
+        #{jingyingFanwei,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jsj.dubbo.test.model.CompanyInfoTianyanExample" resultType="java.lang.Long">
+    select count(*) from company_info_tianyan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update company_info_tianyan
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityName != null">
+        city_name = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null">
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lianxiDianhua != null">
+        lianxi_dianhua = #{record.lianxiDianhua,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eMail != null">
+        e_mail = #{record.eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webAddress != null">
+        web_address = #{record.webAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.farenName != null">
+        faren_name = #{record.farenName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhuceZiben != null">
+        zhuce_ziben = #{record.zhuceZiben,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhuceShijian != null">
+        zhuce_shijian = #{record.zhuceShijian,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jingyingZhuangtai != null">
+        jingying_zhuangtai = #{record.jingyingZhuangtai,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hangye != null">
+        hangye = #{record.hangye,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qiyeleixing != null">
+        qiyeleixing = #{record.qiyeleixing,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gongshangZhucehao != null">
+        gongshang_zhucehao = #{record.gongshangZhucehao,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zuzhijigouDaima != null">
+        zuzhijigou_daima = #{record.zuzhijigouDaima,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tongyixinyongDaima != null">
+        tongyixinyong_daima = #{record.tongyixinyongDaima,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nashuirenShibiehao != null">
+        nashuiren_shibiehao = #{record.nashuirenShibiehao,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jingyingQixian != null">
+        jingying_qixian = #{record.jingyingQixian,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hezhunRiqi != null">
+        hezhun_riqi = #{record.hezhunRiqi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dengjiJiguan != null">
+        dengji_jiguan = #{record.dengjiJiguan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zhuceDizhi != null">
+        zhuce_dizhi = #{record.zhuceDizhi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jingyingFanwei != null">
+        jingying_fanwei = #{record.jingyingFanwei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update company_info_tianyan
+    set id = #{record.id,jdbcType=INTEGER},
+      city_name = #{record.cityName,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      lianxi_dianhua = #{record.lianxiDianhua,jdbcType=VARCHAR},
+      e_mail = #{record.eMail,jdbcType=VARCHAR},
+      web_address = #{record.webAddress,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      faren_name = #{record.farenName,jdbcType=VARCHAR},
+      zhuce_ziben = #{record.zhuceZiben,jdbcType=VARCHAR},
+      zhuce_shijian = #{record.zhuceShijian,jdbcType=VARCHAR},
+      jingying_zhuangtai = #{record.jingyingZhuangtai,jdbcType=VARCHAR},
+      hangye = #{record.hangye,jdbcType=VARCHAR},
+      qiyeleixing = #{record.qiyeleixing,jdbcType=VARCHAR},
+      gongshang_zhucehao = #{record.gongshangZhucehao,jdbcType=VARCHAR},
+      zuzhijigou_daima = #{record.zuzhijigouDaima,jdbcType=VARCHAR},
+      tongyixinyong_daima = #{record.tongyixinyongDaima,jdbcType=VARCHAR},
+      nashuiren_shibiehao = #{record.nashuirenShibiehao,jdbcType=VARCHAR},
+      jingying_qixian = #{record.jingyingQixian,jdbcType=VARCHAR},
+      hezhun_riqi = #{record.hezhunRiqi,jdbcType=VARCHAR},
+      dengji_jiguan = #{record.dengjiJiguan,jdbcType=VARCHAR},
+      zhuce_dizhi = #{record.zhuceDizhi,jdbcType=VARCHAR},
+      jingying_fanwei = #{record.jingyingFanwei,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

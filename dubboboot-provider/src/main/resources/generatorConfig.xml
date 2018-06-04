@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://172.16.14.52:3306/test_db?useSSL=false" userId="root" password="fK2g0Zx6">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.jsj.dubbo.test.model" targetProject="../dubboboot-api/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="com.jsj.dubbo.test.base.MyBatisModelBase"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.jsj.dubbo.test.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <table tableName="hotel_info" enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableUpdateByExample="true">
+            <generatedKey column="Id" sqlStatement="mysql" identity="true"/>
+        </table>
+        <table tableName="company_info_tianyan" enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableUpdateByExample="true">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

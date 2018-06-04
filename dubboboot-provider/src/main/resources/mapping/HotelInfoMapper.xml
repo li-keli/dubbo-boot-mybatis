@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsj.dubbo.test.mapper.HotelInfoMapper">
+  <resultMap id="BaseResultMap" type="com.jsj.dubbo.test.model.HotelInfo">
+    <result column="Id" jdbcType="INTEGER" property="id" />
+    <result column="HotelId" jdbcType="VARCHAR" property="hotelid" />
+    <result column="CityId" jdbcType="VARCHAR" property="cityid" />
+    <result column="HotelName" jdbcType="VARCHAR" property="hotelname" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jsj.dubbo.test.model.HotelInfo">
+    <result column="Json" jdbcType="LONGVARCHAR" property="json" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, HotelId, CityId, HotelName
+  </sql>
+  <sql id="Blob_Column_List">
+    Json
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.jsj.dubbo.test.model.HotelInfoExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hotel_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.jsj.dubbo.test.model.HotelInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hotel_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.jsj.dubbo.test.model.HotelInfoExample">
+    delete from hotel_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jsj.dubbo.test.model.HotelInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into hotel_info (HotelId, CityId, HotelName, 
+      Json)
+    values (#{hotelid,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, #{hotelname,jdbcType=VARCHAR}, 
+      #{json,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jsj.dubbo.test.model.HotelInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into hotel_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hotelid != null">
+        HotelId,
+      </if>
+      <if test="cityid != null">
+        CityId,
+      </if>
+      <if test="hotelname != null">
+        HotelName,
+      </if>
+      <if test="json != null">
+        Json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hotelid != null">
+        #{hotelid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="hotelname != null">
+        #{hotelname,jdbcType=VARCHAR},
+      </if>
+      <if test="json != null">
+        #{json,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jsj.dubbo.test.model.HotelInfoExample" resultType="java.lang.Long">
+    select count(*) from hotel_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update hotel_info
+    <set>
+      <if test="record.id != null">
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotelid != null">
+        HotelId = #{record.hotelid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityid != null">
+        CityId = #{record.cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hotelname != null">
+        HotelName = #{record.hotelname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.json != null">
+        Json = #{record.json,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update hotel_info
+    set Id = #{record.id,jdbcType=INTEGER},
+      HotelId = #{record.hotelid,jdbcType=VARCHAR},
+      CityId = #{record.cityid,jdbcType=VARCHAR},
+      HotelName = #{record.hotelname,jdbcType=VARCHAR},
+      Json = #{record.json,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update hotel_info
+    set Id = #{record.id,jdbcType=INTEGER},
+      HotelId = #{record.hotelid,jdbcType=VARCHAR},
+      CityId = #{record.cityid,jdbcType=VARCHAR},
+      HotelName = #{record.hotelname,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

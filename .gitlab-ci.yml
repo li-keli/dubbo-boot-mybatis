@@ -1,0 +1,49 @@
+# 自动CI脚本
+# 李科笠 2018年04月28日13:15:15
+
+before_script:
+  - provider_version="1.0.0"
+  - consumer_web_version="1.0.0"
+  - echo " CI is running... "
+
+build:
+  stage: build
+  tags:
+    - build
+  script:
+    - echo "预编译"
+    - docker run -i --rm -v /home/.m2:/root/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.5.3-jdk-10 mvn clean compile
+
+deploy-api:
+  stage: deploy
+  tags:
+    - build
+  only:
+      - master
+  script:
+    - echo "发布公共API接口至maven"
+    - cd dubboboot-api && docker run -i --rm -v /home/.m2:/root/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.5.3-jdk-10 mvn clean install deploy -DskipTests
+
+deploy-provider:
+  stage: deploy
+  tags:
+    - build
+  only:
+      - master
+  script:
+    - echo "发布服务"
+    - docker run -i --rm -v /home/.m2:/root/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.5.3-jdk-10 mvn clean package -DskipTests
+    - if [ $(docker ps -a -q -f "name=test-provider" | wc -l) -eq 1 ] ; then docker stop $(docker ps -a -q -f "name=test-provider") && docker rm $(docker ps -a -q -f "name=test-provider") ; fi
+    - docker run -d -p 20880:20880 --name test-provider -v "$(pwd)/dubboboot-provider/target":/usr/src/myapp -w /usr/src/myapp openjdk:11-jdk java -jar dubboboot-provider-"$provider_version".jar
+
+deploy-consumer-web:
+  stage: deploy
+  tags:
+    - build
+  only:
+      - master
+  script:
+    - echo "发布对外web服务"
+    - docker run -i --rm -v /home/.m2:/root/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.5.3-jdk-10 mvn clean package -DskipTests
+    - if [ $(docker ps -a -q -f "name=test-consumer-web" | wc -l) -eq 1 ] ; then docker stop $(docker ps -a -q -f "name=test-consumer-web") && docker rm $(docker ps -a -q -f "name=test-consumer-web") ; fi
+    - docker run -d -p 8081:8081 --name test-consumer-web -v "$(pwd)/dubboboot-consumer-web/target":/usr/src/myapp -w /usr/src/myapp openjdk:11-jdk java -jar dubboboot-consumer-web-"$consumer_web_version".jar
